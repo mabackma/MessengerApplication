@@ -82,7 +82,7 @@ class MessageFragment : Fragment() {
                 }
             }
 
-        // tehdään testinappi, joka lähettää viestin samaan topicciin
+        // nappi, joka lähettää viestin
         buttonSend.setOnClickListener {
             var stringPayload = HIVEMQ_USERNAME + ":\n" + editTextMessage.text.toString()
 
