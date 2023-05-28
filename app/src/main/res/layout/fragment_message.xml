@@ -15,7 +15,7 @@
         android:hint="Enter message to send"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:maxLength="40"/>
+        android:maxLength="120"/>
 
     <Button
         android:id="@+id/button_send_remote_message"
