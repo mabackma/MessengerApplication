@@ -12,7 +12,7 @@ class LatestDataView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
-    val maxRows: Int = 20
+    val maxRows: Int = 100
 
     // alkuvaiheessa tämä riittää kun käytetään compound controlia
     // huom: onDraw ja onMeasure ym. ovat jo valmiiksi tehty LinearLayoutissa
