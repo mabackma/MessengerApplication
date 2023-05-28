@@ -24,11 +24,16 @@
         android:layout_gravity="center_horizontal"
         android:text="SEND MESSAGE" />
 
-    <com.example.messengerapplication.LatestDataView
-        android:id="@+id/custom_view_latest"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:visibility="invisible"
-        android:background="@drawable/customborder"/>
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <com.example.messengerapplication.LatestDataView
+            android:id="@+id/custom_view_latest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:visibility="invisible"
+            android:background="@drawable/customborder"/>
+    </ScrollView>
 </LinearLayout>
