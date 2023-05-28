@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.messengerapplication.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_messageFragment"
+            app:destination="@id/messageFragment"
+            app:popUpTo="@id/nav_home"
+            app:popUpToInclusive="true">
+            <argument
+                android:name="username"
+                android:defaultValue='""' />
+            <argument
+                android:name="password"
+                android:defaultValue='""' />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/messageFragment"
+        android:name="com.example.messengerapplication.MessageFragment"
+        android:label="MQTT Chat"
+        tools:layout="@layout/fragment_message">
+        <argument
+            android:name="username"
+            app:argType="string" />
+        <argument
+            android:name="password"
+            app:argType="string" />
+    </fragment>
+
+</navigation>
