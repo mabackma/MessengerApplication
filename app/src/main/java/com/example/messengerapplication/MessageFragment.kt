@@ -15,6 +15,7 @@ import com.example.messengerapplication.databinding.FragmentMessageBinding
 import com.hivemq.client.mqtt.MqttClient
 import com.hivemq.client.mqtt.mqtt3.Mqtt3AsyncClient
 import com.hivemq.client.mqtt.mqtt3.message.connect.connack.Mqtt3ConnAck
+import kotlin.random.Random
 
 
 class MessageFragment : Fragment() {
@@ -54,10 +55,13 @@ class MessageFragment : Fragment() {
         buttonSend = binding.buttonSendRemoteMessage
         editTextMessage = binding.remoteMessage
 
+        // Luodaan satunnaisluku client nimeä varten
+        var randomNumber = Random.nextInt(0, 100)
+
         client = MqttClient.builder()
             .useMqttVersion3()
             .sslWithDefaultConfig()
-            .identifier("android2023test123")
+            .identifier("android2023test" + randomNumber)
             .serverHost(HIVEMQ_BROKER)
             .serverPort(8883)
             .buildAsync()
