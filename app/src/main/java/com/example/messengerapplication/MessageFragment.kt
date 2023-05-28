@@ -56,7 +56,7 @@ class MessageFragment : Fragment() {
         editTextMessage = binding.remoteMessage
 
         // Luodaan satunnaisluku client nimeä varten
-        var randomNumber = Random.nextInt(0, 100)
+        var randomNumber = Random.nextInt(0, 10000)
 
         client = MqttClient.builder()
             .useMqttVersion3()
