@@ -4,15 +4,17 @@ import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
 import android.util.DisplayMetrics
+import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
+import android.widget.ScrollView
 import android.widget.TextView
 
 class LatestDataView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
-    val maxRows: Int = 100
+    val maxRows: Int = 10000
 
     // alkuvaiheessa tämä riittää kun käytetään compound controlia
     // huom: onDraw ja onMeasure ym. ovat jo valmiiksi tehty LinearLayoutissa
@@ -36,8 +38,18 @@ class LatestDataView @JvmOverloads constructor(
         // mitataan myös itse LinearLayout (paddingit ym.)
         this.measure(0, 0)
 
+        // Calculate the desired height based on the number of rows
+        val desiredHeight = 20 * rowHeight
+
+        // Set the height of the LinearLayout
+        val layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            desiredHeight
+        )
+        this.layoutParams = layoutParams
+
         // lasketaan kaikki yhteen ja asetetaan korkeus LinearLayoutissa
-        var additionalHeight = this.measuredHeight + (maxRows * rowHeight)
+        var additionalHeight = this.measuredHeight + (20 * rowHeight)
         this.minimumHeight = additionalHeight
     }
 
@@ -62,5 +74,14 @@ class LatestDataView @JvmOverloads constructor(
         val animation = AnimationUtils.loadAnimation(context, R.anim.customfade)
         // starting the animation
         newTextView.startAnimation(animation)
+
+        scrollToBottom()
+    }
+
+    fun scrollToBottom() {
+        post { // Ensure the scrolling is done after the view is laid out
+            val scrollView = parent as? ScrollView
+            scrollView?.fullScroll(View.FOCUS_DOWN)
+        }
     }
 }

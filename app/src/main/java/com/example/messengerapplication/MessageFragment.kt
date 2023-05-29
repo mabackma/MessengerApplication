@@ -84,7 +84,7 @@ class MessageFragment : Fragment() {
 
         // nappi, joka lähettää viestin
         buttonSend.setOnClickListener {
-            var stringPayload = HIVEMQ_USERNAME + ":\n" + editTextMessage.text.toString()
+            var stringPayload = HIVEMQ_USERNAME + ":\n" + editTextMessage.text.toString() + "\n"
 
             client.publishWith()
                 .topic(HIVEMQ_TOPIC)

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
+    android:background="@android:color/black"
     tools:context=".HomeFragment">
 
     <TextView
@@ -14,7 +15,7 @@
         android:layout_height="wrap_content"
         android:text="Sign In"
         android:textAlignment="center"
-        android:textColor="@color/purple_500"
+        android:textColor="@color/purple_200"
         android:textSize="30sp"
         android:textStyle="bold" />
 
@@ -22,8 +23,8 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name"
-        android:textColor="@color/purple_500"
+        android:text="Username"
+        android:textColor="@color/purple_200"
         android:textSize="24sp"
         android:textStyle="bold" />
 
@@ -33,15 +34,18 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="Enter your name"
-        android:inputType="textPersonName" />
+        android:hint="Enter your username"
+        android:textColorHint="#808080"
+        android:inputType="textPersonName"
+        android:textColor="@android:color/white"
+        style="@style/EditTextWithUnderline"/>
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Password"
-        android:textColor="@color/purple_500"
+        android:textColor="@color/purple_200"
         android:textSize="24sp"
         android:textStyle="bold"
         android:layout_marginTop="16dp" />
@@ -53,7 +57,10 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Enter your password"
-        android:inputType="textPassword" />
+        android:textColorHint="#808080"
+        android:inputType="textPassword"
+        android:textColor="@android:color/white"
+        style="@style/EditTextWithUnderline"/>
 
     <Button
         android:id="@+id/button_sign_in"

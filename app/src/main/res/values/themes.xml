@@ -22,4 +22,8 @@
     <style name="Theme.MessengerApplication.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.MessengerApplication.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="EditTextWithUnderline" parent="Widget.AppCompat.EditText">
+        <item name="android:backgroundTint">@color/purple_500</item>
+    </style>
 </resources>
