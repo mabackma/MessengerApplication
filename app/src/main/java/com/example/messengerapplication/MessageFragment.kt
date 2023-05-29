@@ -48,7 +48,7 @@ class MessageFragment : Fragment() {
         _binding = FragmentMessageBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        // Asetetaan käyttäjätunnus ja salasana MQTT muuttujiin kirjautumista varten
+        // Asetetaan käyttäjätunnus ja salasana MQTT muuttujiin kirjautumista varten.
         HIVEMQ_USERNAME = args.username
         HIVEMQ_PASSWORD = args.password
 
