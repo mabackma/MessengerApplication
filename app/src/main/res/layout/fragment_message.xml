@@ -39,4 +39,11 @@
             android:padding="10dp"
             android:paddingBottom="20dp"/>
     </ScrollView>
+
+    <Button
+        android:id="@+id/button_clear"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="CLEAR MESSAGES" />
 </LinearLayout>

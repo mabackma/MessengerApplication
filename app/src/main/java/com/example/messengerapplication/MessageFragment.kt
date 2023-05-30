@@ -33,6 +33,7 @@ class MessageFragment : Fragment() {
 
     private lateinit var buttonSend: Button
     private lateinit var editTextMessage: EditText
+    private lateinit var buttonClear: Button
 
     // client-olio, jolla voidaan yhdistää MQTT-brokeriin koodin avulla.
     private lateinit var client: Mqtt3AsyncClient
@@ -67,6 +68,7 @@ class MessageFragment : Fragment() {
 
         buttonSend = binding.buttonSendRemoteMessage
         editTextMessage = binding.remoteMessage
+        buttonClear = binding.buttonClear
 
         // Luodaan satunnaisluku client nimeä varten
         var randomNumber = Random.nextInt(0, 10000)
@@ -97,7 +99,7 @@ class MessageFragment : Fragment() {
 
         // nappi, joka lähettää viestin
         buttonSend.setOnClickListener {
-            var stringPayload = HIVEMQ_USERNAME + ":\n" + editTextMessage.text.toString() + "\n"
+            var stringPayload = "@" + HIVEMQ_USERNAME + ": " + editTextMessage.text.toString()
 
             client.publishWith()
                 .topic(HIVEMQ_TOPIC)
@@ -106,6 +108,11 @@ class MessageFragment : Fragment() {
 
             binding.remoteMessage.text.clear()
             hideKeyboard(editTextMessage)
+        }
+
+        buttonClear.setOnClickListener {
+            messageDAO.deleteAllMessages()
+            binding.customViewLatest.clearData()
         }
 
         return root

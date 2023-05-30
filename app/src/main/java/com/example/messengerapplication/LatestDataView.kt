@@ -84,4 +84,9 @@ class LatestDataView @JvmOverloads constructor(
             scrollView?.fullScroll(View.FOCUS_DOWN)
         }
     }
+
+    // Poistaa kaikki tekstikentät
+    fun clearData() {
+        removeAllViews()
+    }
 }

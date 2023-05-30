@@ -45,4 +45,8 @@ class MessageDAO(context: Context?) {
 
         return messages
     }
+
+    fun deleteAllMessages() {
+        database?.delete("chatroom_messages", null, null)
+    }
 }
