@@ -31,11 +31,10 @@ class HomeFragment : Fragment() {
         textViewSignIn.text = "Welcome!"
 
         binding.buttonSignIn.setOnClickListener{
-            // Otetaan vastaan käyttäjätunnus ja salasana
+            // Otetaan vastaan käyttäjätunnus
             val username = binding.editTextUserName.text.toString()
-            val password = binding.editTextPassword.text.toString()
 
-            val action = HomeFragmentDirections.actionNavHomeToMessageFragment(username, password)
+            val action = HomeFragmentDirections.actionNavHomeToMessageFragment(username)
             findNavController().navigate(action)
         }
 

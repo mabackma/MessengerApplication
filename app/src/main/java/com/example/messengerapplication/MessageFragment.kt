@@ -23,10 +23,7 @@ import kotlin.random.Random
 
 
 class MessageFragment : Fragment() {
-    val HIVEMQ_BROKER = "4d14ef6101be488bbc5604f9bc853ff9.s2.eu.hivemq.cloud"
-    private lateinit var HIVEMQ_USERNAME: String
-    private lateinit var HIVEMQ_PASSWORD: String
-    val HIVEMQ_TOPIC = "chatTopic"
+    private lateinit var chatName: String
 
     // get fragment parameters from previous fragment
     val args: MessageFragmentArgs by navArgs()
@@ -63,8 +60,7 @@ class MessageFragment : Fragment() {
         displayMessages(messages)
 
         // Asetetaan käyttäjätunnus ja salasana MQTT muuttujiin kirjautumista varten.
-        HIVEMQ_USERNAME = args.username
-        HIVEMQ_PASSWORD = args.password
+        chatName = args.username
 
         buttonSend = binding.buttonSendRemoteMessage
         editTextMessage = binding.remoteMessage
@@ -77,15 +73,15 @@ class MessageFragment : Fragment() {
             .useMqttVersion3()
             .sslWithDefaultConfig()
             .identifier("android2023test" + randomNumber)
-            .serverHost(HIVEMQ_BROKER)
+            .serverHost(BuildConfig.HIVEMQ_BROKER)
             .serverPort(8883)
             .buildAsync()
 
         // yhdistetään käyttäjätiedoilla (username/password)
         client.connectWith()
             .simpleAuth()
-            .username(HIVEMQ_USERNAME)
-            .password(HIVEMQ_PASSWORD.toByteArray())
+            .username(BuildConfig.HIVEMQ_USERNAME)
+            .password(BuildConfig.HIVEMQ_PASSWORD.toByteArray())
             .applySimpleAuth()
             .send()
             .whenComplete { connAck: Mqtt3ConnAck?, throwable: Throwable? ->
@@ -99,10 +95,10 @@ class MessageFragment : Fragment() {
 
         // nappi, joka lähettää viestin
         buttonSend.setOnClickListener {
-            var stringPayload = "@" + HIVEMQ_USERNAME + ": " + editTextMessage.text.toString()
+            var stringPayload = "@" + chatName + ": " + editTextMessage.text.toString()
 
             client.publishWith()
-                .topic(HIVEMQ_TOPIC)
+                .topic(BuildConfig.HIVEMQ_TOPIC)
                 .payload(stringPayload.toByteArray())
                 .send()
 
@@ -139,7 +135,7 @@ class MessageFragment : Fragment() {
     fun subscribeToTopic()
     {
         client.subscribeWith()
-            .topicFilter(HIVEMQ_TOPIC)
+            .topicFilter(BuildConfig.HIVEMQ_TOPIC)
             .callback { publish ->
 
                 // this callback runs everytime your code receives new data payload
