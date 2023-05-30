@@ -11,10 +11,14 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import androidx.navigation.fragment.navArgs
+import com.example.messengerapplication.database.Message
+import com.example.messengerapplication.database.MessageDAO
 import com.example.messengerapplication.databinding.FragmentMessageBinding
 import com.hivemq.client.mqtt.MqttClient
 import com.hivemq.client.mqtt.mqtt3.Mqtt3AsyncClient
 import com.hivemq.client.mqtt.mqtt3.message.connect.connack.Mqtt3ConnAck
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import kotlin.random.Random
 
 
@@ -40,6 +44,11 @@ class MessageFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    // Tämä luodaan vain kerran, silloin kun sitä tarvitaan
+    private val messageDAO: MessageDAO by lazy {
+        MessageDAO(requireContext())
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,6 +56,10 @@ class MessageFragment : Fragment() {
     ): View? {
         _binding = FragmentMessageBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        // Näytetään kaikki viestit tietokannasta
+        val messages = messageDAO.getAllMessages()
+        displayMessages(messages)
 
         // Asetetaan käyttäjätunnus ja salasana MQTT muuttujiin kirjautumista varten.
         HIVEMQ_USERNAME = args.username
@@ -98,6 +111,16 @@ class MessageFragment : Fragment() {
         return root
     }
 
+    // Näytetään kaikki tietokannassa olevat viestit.
+    private fun displayMessages(messages: List<Message>) {
+        var index = 0
+        while (index < messages.size) {
+            val message = messages[index]
+            binding.customViewLatest.addData(message.content)
+            index++
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -117,7 +140,20 @@ class MessageFragment : Fragment() {
 
                 activity?.runOnUiThread {
                     binding.customViewLatest.addData(result)
-                    binding.customViewLatest.visibility = View.VISIBLE
+
+                    // Aikaleima
+                    val currentDateTime = LocalDateTime.now()
+                    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+                    val formattedTimestamp = currentDateTime.format(formatter)
+
+                    // Luodaan Message.
+                    val msg = Message(
+                        id = null,
+                        timestamp = formattedTimestamp,
+                        content = result
+                    )
+                    // Lisätään message tietokantaan.
+                    messageDAO.insertMessage(msg)
                 }
 
             }
