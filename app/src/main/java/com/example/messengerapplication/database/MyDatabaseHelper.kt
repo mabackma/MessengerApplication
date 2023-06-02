@@ -11,11 +11,11 @@ class MyDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NA
     }
 
     override fun onCreate(db: SQLiteDatabase) {
-        // Create the necessary tables or perform any initial setup here
+        // Luodaan chatroom_messages taulu jos sitä ei ole jo olemassa.
         db.execSQL("CREATE TABLE IF NOT EXISTS chatroom_messages (id INTEGER PRIMARY KEY, sender TEXT, timestamp TEXT, content TEXT)")
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        // No implementation needed since database is not expected to be upgraded
+        // Viestejä ei muokata
     }
 }

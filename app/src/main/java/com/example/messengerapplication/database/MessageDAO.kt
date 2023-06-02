@@ -16,7 +16,9 @@ class MessageDAO(context: Context?) {
         }
     }
 
+    // Viestin lisääminen tietokantaan
     fun insertMessage(message: Message) {
+        // Avain-arvo parit viestien tallentamista varten.
         val values = ContentValues().apply {
             put("timestamp", message.timestamp)
             put("content", message.content)
@@ -24,14 +26,19 @@ class MessageDAO(context: Context?) {
         database?.insert("chatroom_messages", null, values)
     }
 
+    // Viestien lukeminen tietokannasta
     fun getAllMessages(): List<Message> {
         val messages = mutableListOf<Message>()
 
+        // chatroom_messages taulun rakenne.
         val columns = arrayOf("id", "timestamp", "content")
-        val orderBy = "timestamp ASC"  // Oldest to newest
+        val orderBy = "timestamp ASC"  // järjestys vanhimmasta uusimpaan viestiin
 
+        // Kursori kyselyä varten
+        // Kysely hakee kaikki viestit chatroom_messages taulusta ja ainoana kyselyparametrina on järjestys
         val cursor = database?.query("chatroom_messages", columns, null, null, null, null, orderBy)
 
+        // Kursori käy kaikki viestit tietokannassa läpi ja lisää ne messages listaan
         cursor?.use {
             while (it.moveToNext()) {
                 val messageId = it.getInt(it.getColumnIndex("id"))
@@ -43,6 +50,7 @@ class MessageDAO(context: Context?) {
             }
         }
 
+        // Palautetaan messages lista.
         return messages
     }
 
