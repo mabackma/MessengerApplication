@@ -1,6 +1,10 @@
 package com.example.messengerapplication
 
+import android.app.ActivityManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,6 +14,8 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.navigation.fragment.navArgs
 import com.example.messengerapplication.database.Message
 import com.example.messengerapplication.database.MessageDAO
@@ -47,6 +53,8 @@ class MessageFragment : Fragment() {
         MessageDAO(requireContext())
     }
 
+    private lateinit var notificationManager: NotificationManager
+    private val notificationId = Random.nextInt(0, 10000)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -55,6 +63,7 @@ class MessageFragment : Fragment() {
         _binding = FragmentMessageBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        notificationManager = requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         // Näytetään kaikki viestit tietokannasta
         val messages = messageDAO.getAllMessages()
         displayMessages(messages)
@@ -144,6 +153,10 @@ class MessageFragment : Fragment() {
                 activity?.runOnUiThread {
                     binding.customViewLatest.addData(result)
 
+                    if (!isAppInForeground()) {
+                        createNotification(result)
+                    }
+
                     // Aikaleima
                     val currentDateTime = LocalDateTime.now()
                     val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
@@ -175,5 +188,50 @@ class MessageFragment : Fragment() {
     fun Fragment.hideKeyboard(editText: EditText) {
         val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(editText.windowToken, 0)
+    }
+
+    private fun createNotification(result: String) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel("your_channel_id", "Channel Name", NotificationManager.IMPORTANCE_DEFAULT)
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        // Create a notification
+        val builder = NotificationCompat.Builder(requireContext(), "your_channel_id")
+            .setSmallIcon(R.drawable.my_icon)
+            .setContentTitle("Message")
+            .setContentText(result)
+            .setAutoCancel(true)
+
+        // Display the notification
+        val notificationId = Random.nextInt(0, 10000)
+        val notificationManagerCompat = NotificationManagerCompat.from(requireContext())
+        notificationManagerCompat.notify(notificationId, builder.build())
+    }
+
+    private fun isAppInForeground(): Boolean {
+        val activityManager = requireContext().getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        val appProcesses = activityManager.runningAppProcesses ?: return false
+
+        for (appProcess in appProcesses) {
+            if (appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND &&
+                appProcess.processName == requireContext().packageName
+            ) {
+                return true
+            }
+        }
+
+        return false
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // Clear the notifications when the app is brought to the foreground
+        clearNotifications()
+    }
+
+    private fun clearNotifications() {
+        notificationManager.cancelAll()
     }
 }
