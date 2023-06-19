@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ScrollView
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.navigation.fragment.navArgs
@@ -229,6 +230,11 @@ class MessageFragment : Fragment() {
 
         // Clear the notifications when the app is brought to the foreground
         clearNotifications()
+
+        val scrollView = binding.scrollMessages
+        scrollView.post {
+            scrollView.fullScroll(ScrollView.FOCUS_DOWN)
+        }
     }
 
     private fun clearNotifications() {
