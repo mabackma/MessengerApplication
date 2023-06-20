@@ -5,7 +5,10 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
-            android:title="@string/menu_home" />
+            android:id="@+id/loginFragment"
+            android:title="Login" />
+        <item
+            android:id="@+id/registerFragment"
+            android:title="Register" />
     </group>
 </menu>

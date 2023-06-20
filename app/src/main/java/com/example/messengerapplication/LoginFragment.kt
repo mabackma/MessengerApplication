@@ -1,19 +1,17 @@
 package com.example.messengerapplication
 
 import android.os.Bundle
-import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import com.example.messengerapplication.databinding.FragmentHomeBinding
+import com.example.messengerapplication.databinding.FragmentLoginBinding
 
-class HomeFragment : Fragment() {
+class LoginFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentLoginBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -24,7 +22,7 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentLoginBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textViewSignIn: TextView = binding.textSignIn
@@ -34,7 +32,7 @@ class HomeFragment : Fragment() {
             // Otetaan vastaan käyttäjätunnus
             val username = binding.editTextUserName.text.toString()
 
-            val action = HomeFragmentDirections.actionNavHomeToMessageFragment(username)
+            val action = LoginFragmentDirections.actionLoginFragmentToMessageFragment(username)
             findNavController().navigate(action)
         }
 
