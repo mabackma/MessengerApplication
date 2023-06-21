@@ -22,7 +22,7 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Username"
+        android:text="E-mail"
         android:textColor="@color/purple_200"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="Enter your username"
+        android:hint="Enter your e-mail address"
         android:textColorHint="#808080"
         android:inputType="textPersonName"
         android:textColor="@android:color/white"
@@ -82,34 +82,12 @@
         android:layout_marginTop="10dp"
         android:clickable="true" />
 
-    <TextView
-        android:layout_marginTop="80dp"
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Chat name"
-        android:textColor="@color/purple_200"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/editText_chat_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="Enter your chat name"
-        android:textColorHint="#808080"
-        android:inputType="textPersonName"
-        android:textColor="@android:color/white"
-        style="@style/EditTextWithUnderline"/>
-
     <Button
         android:id="@+id/button_sign_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
-        android:text="ENTER CHAT" />
+        android:text="SIGN IN" />
 
 </LinearLayout>

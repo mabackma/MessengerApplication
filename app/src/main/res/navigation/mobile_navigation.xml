@@ -32,7 +32,16 @@
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
         <action
-            android:id="@+id/action_loginFragment_to_messageFragment"
+            android:id="@+id/action_loginFragment_to_enterFragment"
+            app:destination="@id/enterFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/enterFragment"
+        android:name="com.example.messengerapplication.EnterFragment"
+        android:label="fragment_enter"
+        tools:layout="@layout/fragment_enter" >
+        <action
+            android:id="@+id/action_enterFragment_to_messageFragment"
             app:destination="@id/messageFragment" />
     </fragment>
 

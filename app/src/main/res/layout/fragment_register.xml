@@ -22,7 +22,7 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Username"
+        android:text="E-mail"
         android:textColor="@color/purple_200"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="Enter your username"
+        android:hint="Enter your e-mail address"
         android:textColorHint="#808080"
         android:inputType="textPersonName"
         android:textColor="@android:color/white"
