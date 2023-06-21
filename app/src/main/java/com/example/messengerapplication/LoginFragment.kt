@@ -12,9 +12,6 @@ import com.example.messengerapplication.databinding.FragmentLoginBinding
 class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -28,11 +25,16 @@ class LoginFragment : Fragment() {
         val textViewSignIn: TextView = binding.textSignIn
         textViewSignIn.text = "Welcome!"
 
-        binding.buttonSignIn.setOnClickListener{
-            // Otetaan vastaan käyttäjätunnus
-            val username = binding.editTextUserName.text.toString()
+        binding.goToRegister.setOnClickListener{
+            val action = LoginFragmentDirections.actionLoginFragmentToRegisterFragment()
+            findNavController().navigate(action)
+        }
 
-            val action = LoginFragmentDirections.actionLoginFragmentToMessageFragment(username)
+        binding.buttonSignIn.setOnClickListener{
+            // Otetaan vastaan chat nimi
+            val chatname = binding.editTextChatName.text.toString()
+
+            val action = LoginFragmentDirections.actionLoginFragmentToMessageFragment(chatname)
             findNavController().navigate(action)
         }
 

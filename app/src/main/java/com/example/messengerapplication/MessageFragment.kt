@@ -70,7 +70,7 @@ class MessageFragment : Fragment() {
         displayMessages(messages)
 
         // Asetetaan käyttäjätunnus ja salasana MQTT muuttujiin kirjautumista varten.
-        chatName = args.username
+        chatName = args.chatname
 
         buttonSend = binding.buttonSendRemoteMessage
         editTextMessage = binding.remoteMessage

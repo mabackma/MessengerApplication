@@ -12,14 +12,14 @@
         android:id="@+id/text_sign_in"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sign In"
         android:textAlignment="center"
         android:textColor="@color/purple_200"
         android:textSize="30sp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:layout_marginTop="10dp"
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Username"
@@ -39,12 +39,77 @@
         android:textColor="@android:color/white"
         style="@style/EditTextWithUnderline"/>
 
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/textViewPassWd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Password"
+        android:textColor="@color/purple_200"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/editText_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Enter your password"
+        android:textColorHint="#808080"
+        android:inputType="textPassword"
+        android:textColor="@android:color/white"
+        style="@style/EditTextWithUnderline"/>
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/text_not_a_user"
+        android:text="Not a user?"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textColor="@color/purple_200"
+        android:textSize="24dp" />
+
+    <TextView
+        android:id="@+id/go_to_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textColor="@color/purple_200"
+        android:textSize="20dp"
+        android:text="Click here to register"
+        android:layout_marginTop="10dp"
+        android:clickable="true" />
+
+    <TextView
+        android:layout_marginTop="80dp"
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chat name"
+        android:textColor="@color/purple_200"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/editText_chat_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Enter your chat name"
+        android:textColorHint="#808080"
+        android:inputType="textPersonName"
+        android:textColor="@android:color/white"
+        style="@style/EditTextWithUnderline"/>
+
     <Button
         android:id="@+id/button_sign_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ENTER CHAT"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:text="ENTER CHAT" />
 
 </LinearLayout>
