@@ -1,7 +1,16 @@
 package com.example.messengerapplication
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.text.style.URLSpan
+import android.text.util.Linkify
 import android.util.AttributeSet
 import android.util.Log
 import java.util.regex.Pattern
@@ -64,13 +73,27 @@ class LatestDataView @JvmOverloads constructor(
             this.removeViewAt(0)
         }
 
-
         var newTextView : TextView = TextView(context) as TextView
 
-        if(isUrl(message)) {
-            newTextView.setText(extractUrl(message))
+        if(extractUrl(message) != null) {
+            val clickableUrl = extractUrl(message)
+            val clickableUrlSpan = object : ClickableSpan() {
+                override fun onClick(widget: View) {
+                    // Handle the click event for the URL
+                    // For example, open the URL in a browser
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(clickableUrl))
+                    context.startActivity(intent)
+                }
+            }
+
+            val spannableString = SpannableString(message)
+            val startIndex = message.indexOf(clickableUrl!!)
+            spannableString.setSpan(clickableUrlSpan, startIndex, startIndex + clickableUrl.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+            newTextView.setText(spannableString)
+            newTextView.movementMethod = LinkMovementMethod.getInstance()
             newTextView.setBackgroundColor(Color.BLACK)
-            newTextView.setTextColor(Color.CYAN)
+            newTextView.setTextColor(Color.GREEN)
         }
         else {
             newTextView.setText(message)
@@ -100,26 +123,23 @@ class LatestDataView @JvmOverloads constructor(
         removeAllViews()
     }
 
-    // Checks if string contains a valid Url
-    fun isUrl(str: String): Boolean {
-        val startIndex = str.indexOf(": ") + 2 // Find the index after the first semicolon and space
-        val substring = str.substring(startIndex)
+    // Extracts the url from the message
+    fun extractUrl(str: String): String? {
+        val segments = str.split("\\s+".toRegex()) // Split the string into segments by whitespace
 
-        val urlPattern = Pattern.compile("((http|https)://)(www.)?" +
-                "[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]" +
-                "{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)"
-        )
+        for (segment in segments) {
+            val urlPattern = Pattern.compile("((http|https)://)(www.)?" +
+                    "[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]" +
+                    "{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)"
+            )
 
-        val matcher = urlPattern.matcher(substring)
-        return matcher.matches()
-    }
+            val matcher = urlPattern.matcher(segment)
+            if (matcher.matches()) {
+                return segment // Return the segment containing the valid URL
+            }
+        }
 
-    // Extracts the url from string
-    fun extractUrl(str: String): String {
-        val startIndex = str.indexOf(": ") + 2 // Find the index after the first semicolon and space
-        val substring = str.substring(startIndex)
-
-        return substring
+        return null // No valid URL found
     }
 
 }
