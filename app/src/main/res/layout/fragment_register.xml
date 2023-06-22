@@ -28,7 +28,7 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/editText_user_name"
+        android:id="@+id/editText_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -38,6 +38,16 @@
         android:inputType="textPersonName"
         android:textColor="@android:color/white"
         style="@style/EditTextWithUnderline"/>
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/textViewValidEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter valid e-mail!"
+        android:textColor="#FF0000"
+        android:textSize="16dp"
+        android:visibility="invisible"/>
 
     <TextView
         android:layout_marginTop="10dp"

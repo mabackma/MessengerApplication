@@ -105,7 +105,8 @@ class MessageFragment : Fragment() {
 
         // nappi, joka lähettää viestin
         buttonSend.setOnClickListener {
-            var stringPayload = "@" + chatName + ": " + editTextMessage.text.toString()
+            var chatMessage = editTextMessage.text.toString()
+            var stringPayload = "@" + chatName + ": " + chatMessage
 
             client.publishWith()
                 .topic(BuildConfig.HIVEMQ_TOPIC)

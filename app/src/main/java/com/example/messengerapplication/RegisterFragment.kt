@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.messengerapplication.databinding.FragmentRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
+import android.util.Patterns
 
 class RegisterFragment : Fragment() {
 
@@ -29,10 +30,10 @@ class RegisterFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
 
         binding.buttonRegister.setOnClickListener{
-            if(checkPasswd() && binding.editTextUserName.text.toString().isNotBlank()) {
-                createNewUser()
-                val action = RegisterFragmentDirections.actionRegisterFragmentToLoginFragment()
-                findNavController().navigate(action)
+            if(isValidEmail()) {
+                if(checkPasswd()) {
+                    createNewUser()
+                }
             }
         }
 
@@ -47,18 +48,21 @@ class RegisterFragment : Fragment() {
     private fun checkPasswd(): Boolean {
         val passwd = binding.editTextPassword.text.toString()
         val passwdCheck = binding.editTextPasswordCheck.text.toString()
-        if(passwd.isEmpty() || passwdCheck.isEmpty()) {
+        if(passwd.isBlank() || passwdCheck.isBlank()) {
             return false
         }
         if(passwd != passwdCheck) {
             binding.textViewMatchingPasswd.visibility = View.VISIBLE
             return false
         }
+        else {
+            binding.textViewMatchingPasswd.visibility = View.INVISIBLE
+        }
         return true
     }
 
     private fun createNewUser() {
-        val email = binding.editTextUserName.text.toString()
+        val email = binding.editTextEmail.text.toString()
         val password = binding.editTextPassword.text.toString()
 
         auth.createUserWithEmailAndPassword(email, password)
@@ -71,6 +75,10 @@ class RegisterFragment : Fragment() {
                         "Account created.",
                         Toast.LENGTH_SHORT,
                     ).show()
+
+                    // Move to login fragment
+                    val action = RegisterFragmentDirections.actionRegisterFragmentToLoginFragment()
+                    findNavController().navigate(action)
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.d("AUTH", "createUserWithEmail:failure", task.exception)
@@ -79,7 +87,20 @@ class RegisterFragment : Fragment() {
                         "Authentication failed.",
                         Toast.LENGTH_SHORT,
                     ).show()
+                    binding.textViewValidEmail.visibility = View.VISIBLE
                 }
             }
+    }
+
+    fun isValidEmail(): Boolean {
+        val email = binding.editTextEmail.text.toString()
+        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches() || email.isBlank()) {
+            binding.textViewValidEmail.visibility = View.VISIBLE
+            return false
+        }
+        else {
+            binding.textViewValidEmail.visibility = View.INVISIBLE
+        }
+        return true
     }
 }

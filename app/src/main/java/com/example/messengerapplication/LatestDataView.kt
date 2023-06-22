@@ -3,7 +3,8 @@ package com.example.messengerapplication
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
-import android.util.DisplayMetrics
+import android.util.Log
+import java.util.regex.Pattern
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
@@ -63,13 +64,22 @@ class LatestDataView @JvmOverloads constructor(
             this.removeViewAt(0)
         }
 
+
         var newTextView : TextView = TextView(context) as TextView
-        newTextView.setText(message)
-        newTextView.setBackgroundColor(Color.BLACK)
-        newTextView.setTextColor(Color.GREEN)
+
+        if(isUrl(message)) {
+            newTextView.setText(extractUrl(message))
+            newTextView.setBackgroundColor(Color.BLACK)
+            newTextView.setTextColor(Color.CYAN)
+        }
+        else {
+            newTextView.setText(message)
+            newTextView.setBackgroundColor(Color.BLACK)
+            newTextView.setTextColor(Color.GREEN)
+        }
+
         newTextView.textSize = 20f
         this.addView(newTextView)
-
         // fade-in animaatio päälle
         val animation = AnimationUtils.loadAnimation(context, R.anim.customfade)
         // starting the animation
@@ -89,4 +99,27 @@ class LatestDataView @JvmOverloads constructor(
     fun clearData() {
         removeAllViews()
     }
+
+    // Checks if string contains a valid Url
+    fun isUrl(str: String): Boolean {
+        val startIndex = str.indexOf(": ") + 2 // Find the index after the first semicolon and space
+        val substring = str.substring(startIndex)
+
+        val urlPattern = Pattern.compile("((http|https)://)(www.)?" +
+                "[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]" +
+                "{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)"
+        )
+
+        val matcher = urlPattern.matcher(substring)
+        return matcher.matches()
+    }
+
+    // Extracts the url from string
+    fun extractUrl(str: String): String {
+        val startIndex = str.indexOf(": ") + 2 // Find the index after the first semicolon and space
+        val substring = str.substring(startIndex)
+
+        return substring
+    }
+
 }
