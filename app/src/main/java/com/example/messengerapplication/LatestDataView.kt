@@ -88,19 +88,22 @@ class LatestDataView @JvmOverloads constructor(
 
             val spannableString = SpannableString(message)
             val startIndex = message.indexOf(clickableUrl!!)
+
+            // Make the url clickable from start index of the url to the end of the url
+            // clickableUrlSpan defines the behaviour that will be applied to the full length of the url
             spannableString.setSpan(clickableUrlSpan, startIndex, startIndex + clickableUrl.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
             newTextView.setText(spannableString)
+
+            // Make the link so it can be opened in a browser
             newTextView.movementMethod = LinkMovementMethod.getInstance()
-            newTextView.setBackgroundColor(Color.BLACK)
-            newTextView.setTextColor(Color.GREEN)
         }
         else {
             newTextView.setText(message)
-            newTextView.setBackgroundColor(Color.BLACK)
-            newTextView.setTextColor(Color.GREEN)
         }
 
+        newTextView.setBackgroundColor(Color.BLACK)
+        newTextView.setTextColor(Color.GREEN)
         newTextView.textSize = 20f
         this.addView(newTextView)
         // fade-in animaatio päälle
