@@ -38,8 +38,8 @@
     <fragment
         android:id="@+id/enterFragment"
         android:name="com.example.messengerapplication.EnterFragment"
-        android:label="fragment_enter"
-        tools:layout="@layout/fragment_enter" >
+        android:label="Enter Chat"
+        tools:layout="@layout/fragment_enter">
         <action
             android:id="@+id/action_enterFragment_to_messageFragment"
             app:destination="@id/messageFragment" />
