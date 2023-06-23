@@ -38,7 +38,7 @@
     <fragment
         android:id="@+id/enterFragment"
         android:name="com.example.messengerapplication.EnterFragment"
-        android:label="Enter Chat"
+        android:label="Enter"
         tools:layout="@layout/fragment_enter">
         <action
             android:id="@+id/action_enterFragment_to_messageFragment"
