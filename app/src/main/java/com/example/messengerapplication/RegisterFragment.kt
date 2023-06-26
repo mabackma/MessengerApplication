@@ -77,7 +77,7 @@ class RegisterFragment : Fragment() {
                     ).show()
 
                     // Move to login fragment
-                    val action = RegisterFragmentDirections.actionRegisterFragmentToLoginFragment()
+                    val action = RegisterFragmentDirections.actionRegisterFragmentToEnterFragment()
                     findNavController().navigate(action)
                 } else {
                     // If sign in fails, display a message to the user.

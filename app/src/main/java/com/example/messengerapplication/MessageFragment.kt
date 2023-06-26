@@ -17,10 +17,13 @@ import android.widget.EditText
 import android.widget.ScrollView
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.messengerapplication.database.Message
 import com.example.messengerapplication.database.MessageDAO
 import com.example.messengerapplication.databinding.FragmentMessageBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
 import com.hivemq.client.mqtt.MqttClient
 import com.hivemq.client.mqtt.mqtt3.Mqtt3AsyncClient
 import com.hivemq.client.mqtt.mqtt3.message.connect.connack.Mqtt3ConnAck
@@ -38,6 +41,9 @@ class MessageFragment : Fragment() {
     private lateinit var buttonSend: Button
     private lateinit var editTextMessage: EditText
     private lateinit var buttonClear: Button
+    private lateinit var buttonLogout: Button
+
+    private lateinit var auth: FirebaseAuth
 
     // client-olio, jolla voidaan yhdistää MQTT-brokeriin koodin avulla.
     private lateinit var client: Mqtt3AsyncClient
@@ -69,12 +75,15 @@ class MessageFragment : Fragment() {
         val messages = messageDAO.getAllMessages()
         displayMessages(messages)
 
+        auth = FirebaseAuth.getInstance()
+
         // Asetetaan käyttäjätunnus ja salasana MQTT muuttujiin kirjautumista varten.
         chatName = args.chatname
 
         buttonSend = binding.buttonSendRemoteMessage
         editTextMessage = binding.remoteMessage
         buttonClear = binding.buttonClear
+        buttonLogout = binding.buttonLogout
 
         // Luodaan satunnaisluku client nimeä varten
         var randomNumber = Random.nextInt(0, 10000)
@@ -120,6 +129,12 @@ class MessageFragment : Fragment() {
         buttonClear.setOnClickListener {
             messageDAO.deleteAllMessages()
             binding.customViewLatest.clearData()
+        }
+
+        buttonLogout.setOnClickListener {
+            auth.signOut()
+            val action = MessageFragmentDirections.actionMessageFragmentToLoginFragment()
+            findNavController().navigate(action)
         }
 
         return root

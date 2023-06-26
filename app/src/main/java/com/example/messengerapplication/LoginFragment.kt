@@ -38,7 +38,12 @@ class LoginFragment : Fragment() {
         }
 
         binding.buttonSignIn.setOnClickListener{
-            signIn()
+            val email = binding.editTextUserName.text.toString()
+            val password = binding.editTextPassword.text.toString()
+
+            if(!email.isBlank() && !password.isBlank()) {
+                signIn(email, password)
+            }
         }
 
         return root
@@ -49,10 +54,7 @@ class LoginFragment : Fragment() {
         _binding = null
     }
 
-    private fun signIn() {
-        val email = binding.editTextUserName.text.toString()
-        val password = binding.editTextPassword.text.toString()
-
+    private fun signIn(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {

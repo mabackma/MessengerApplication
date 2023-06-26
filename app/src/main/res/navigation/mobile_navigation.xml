@@ -13,6 +13,9 @@
         <argument
             android:name="chatname"
             app:argType="string" />
+        <action
+            android:id="@+id/action_messageFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -20,8 +23,8 @@
         android:label="Register"
         tools:layout="@layout/fragment_register" >
         <action
-            android:id="@+id/action_registerFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            android:id="@+id/action_registerFragment_to_enterFragment"
+            app:destination="@id/enterFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"

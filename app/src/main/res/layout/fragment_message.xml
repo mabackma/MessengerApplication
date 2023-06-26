@@ -42,10 +42,25 @@
             android:paddingBottom="20dp"/>
     </ScrollView>
 
-    <Button
-        android:id="@+id/button_clear"
-        android:layout_width="200dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="CLEAR MESSAGES" />
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/button_clear"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:text="CLEAR SCREEN" />
+
+        <Button
+            android:id="@+id/button_logout"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:text="LOGOUT" />
+    </LinearLayout>
 </LinearLayout>
