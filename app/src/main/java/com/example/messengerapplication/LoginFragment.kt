@@ -58,15 +58,26 @@ class LoginFragment : Fragment() {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d("AUTH", "signInWithEmail:success")
-                    Toast.makeText(
-                        requireContext(),
-                        "Authentication success.",
-                        Toast.LENGTH_SHORT,
-                    ).show()
-                    val action = LoginFragmentDirections.actionLoginFragmentToEnterFragment()
-                    findNavController().navigate(action)
+                    if(auth.currentUser!!.isEmailVerified) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d("AUTH", "signInWithEmail:success")
+                        Toast.makeText(
+                            requireContext(),
+                            "Authentication success.",
+                            Toast.LENGTH_SHORT,
+                        ).show()
+
+                        // Proceed to entering chat.
+                        val action = LoginFragmentDirections.actionLoginFragmentToEnterFragment()
+                        findNavController().navigate(action)
+                    }
+                    else {
+                        Toast.makeText(
+                            requireContext(),
+                            "Please verify your email address.",
+                            Toast.LENGTH_SHORT,
+                        ).show()
+                    }
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.d("AUTH", "signInWithEmail:failure", task.exception)

@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.messengerapplication.databinding.FragmentRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
 import android.util.Patterns
+import com.google.firebase.ktx.Firebase
 
 class RegisterFragment : Fragment() {
 
@@ -68,17 +69,33 @@ class RegisterFragment : Fragment() {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d("AUTH", "createUserWithEmail:success")
-                    Toast.makeText(
-                        requireContext(),
-                        "Account created.",
-                        Toast.LENGTH_SHORT,
-                    ).show()
-
-                    // Move to login fragment
-                    val action = RegisterFragmentDirections.actionRegisterFragmentToEnterFragment()
-                    findNavController().navigate(action)
+                    // Verification email
+                    val user = auth.currentUser
+                    user!!.sendEmailVerification()
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                Log.d("Verification", "Email sent.")
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d("AUTH", "createUserWithEmail:success")
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Account created. Please check your email for verification.",
+                                    Toast.LENGTH_LONG,
+                                ).show()
+                                // Move to login fragment
+                                val action = RegisterFragmentDirections.actionRegisterFragmentToLoginFragment()
+                                findNavController().navigate(action)
+                            }
+                            else {
+                                Log.d("Verification", "Email NOT sent.")
+                                Log.d("AUTH", "createUserWithEmail:success")
+                                Toast.makeText(
+                                    requireContext(),
+                                    task.exception?.message.toString(),
+                                    Toast.LENGTH_SHORT,
+                                ).show()
+                            }
+                        }
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.d("AUTH", "createUserWithEmail:failure", task.exception)
